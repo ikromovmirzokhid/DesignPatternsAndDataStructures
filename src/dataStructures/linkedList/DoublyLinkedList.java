@@ -105,6 +105,7 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             node.next.prev = node.prev;
             node.prev.next = node.next;
             node.data = null;
+            node = node.prev = node.next = null;
             size--;
         }
         return data;
