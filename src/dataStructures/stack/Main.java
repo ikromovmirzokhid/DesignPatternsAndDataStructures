@@ -7,7 +7,6 @@ public class Main {
         stack.push(3);
         stack.push(4);
         stack.pop();
-        stack.pop();
         stack.push(5);
         stack.pop();
         stack.push(7);
