@@ -34,6 +34,8 @@ public class DynamicArray<T> implements Iterable<T> {
     public void set(int index, T obj) {
         if (index < 0) throw new IllegalArgumentException("no such index " + index);
         if (index >= size) throw new ArrayIndexOutOfBoundsException();
+        if (obj == null)
+            size--;
         arr[index] = obj;
     }
 
@@ -93,6 +95,7 @@ public class DynamicArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int i = 0;
+
             @Override
             public boolean hasNext() {
                 return i < size;
