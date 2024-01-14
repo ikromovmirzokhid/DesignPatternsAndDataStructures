@@ -149,7 +149,6 @@ public class DoublyLinkedList<T> implements Iterable<T> {
             public boolean hasNext() {
                 return temp != null;
             }
-
             @Override
             public T next() {
                 T data = temp.data;
