@@ -4,6 +4,7 @@ import dataStructures.dynamicArray.DynamicArray;
 import dataStructures.linkedList.DoublyLinkedList;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 class Entry<K, V> {
@@ -149,7 +150,7 @@ public class HashTable<K, V> implements Iterable<K> {
         if (entry != null) {
             DoublyLinkedList<Entry<K, V>> bucket = table[index];
             bucket.remove(entry);
-            if(bucket.isEmpty())
+            if (bucket.isEmpty())
                 table[index] = null;
             size--;
             return entry.val;
@@ -190,6 +191,7 @@ public class HashTable<K, V> implements Iterable<K> {
 
     @Override
     public Iterator<K> iterator() {
+        int SIZE = size();
         return new Iterator<K>() {
             private int tableIndex = -1;
             private Iterator<Entry<K, V>> currentBucketIterator;
@@ -198,6 +200,7 @@ public class HashTable<K, V> implements Iterable<K> {
 
             @Override
             public boolean hasNext() {
+                if (SIZE != size()) throw new ConcurrentModificationException();
                 if (currentBucket != null && currentBucketIndex < currentBucket.size()) {
                     return true;
                 } else {
@@ -217,6 +220,7 @@ public class HashTable<K, V> implements Iterable<K> {
 
             @Override
             public K next() {
+                if (SIZE != size()) throw new ConcurrentModificationException();
                 currentBucketIndex++;
                 return currentBucketIterator.next().key;
             }
