@@ -2,7 +2,7 @@ package dataStructures.HashTable.openAdressing;
 
 public class Main {
     public static void main(String[] args) {
-        HashTableQuadraticProbing<Integer, String> users = new HashTableQuadraticProbing<>();
+        HashTableLinearProbing<Integer, String> users = new HashTableLinearProbing<>();
         users.put(0, "Miz");
         users.put(1, "Fazik");
         users.put(2, "Jama");
