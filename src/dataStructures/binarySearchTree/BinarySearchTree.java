@@ -1,8 +1,9 @@
 package dataStructures.binarySearchTree;
 
-import java.util.Iterator;
+import dataStructures.queue.Queue;
 
-import static dataStructures.binarySearchTree.TraversalOrder.PRE_ORDER;
+import java.util.Iterator;
+import java.util.Stack;
 
 enum TraversalOrder {
     PRE_ORDER,
@@ -142,20 +143,179 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return null;
     }
 
+    public void print(TraversalOrder order) {
+        switch (order) {
+            case PRE_ORDER -> {
+                preOrderPrint(root);
+                break;
+            }
+            case IN_ORDER -> {
+                inOrderPrint(root);
+                break;
+            }
+            case POST_ORDER -> {
+                postOrderPrint(root);
+                break;
+            }
+            case LEVEL_ORDER -> {
+                levelOrderPrint(root);
+                break;
+            }
+        }
+    }
+
+    private void preOrderPrint(Node node) {
+        if (node == null)
+            return;
+        System.out.println(node.data);
+        preOrderPrint(node.left);
+        preOrderPrint(node.right);
+    }
+
+    private void inOrderPrint(Node node) {
+        if (node == null)
+            return;
+        inOrderPrint(node.left);
+        System.out.println(node.data);
+        inOrderPrint(node.right);
+    }
+
+    private void postOrderPrint(Node node) {
+        if (node == null)
+            return;
+        postOrderPrint(node.left);
+        postOrderPrint(node.right);
+        System.out.println(node.data);
+    }
+
+    private void levelOrderPrint(Node node) {
+        Queue<Node> queue = new Queue<>();
+        queue.enqueue(node);
+        while (!queue.isEmpty()) {
+            Node n = queue.dequeue();
+            System.out.println(n.data);
+            if (n.left != null)
+                queue.enqueue(n.left);
+            if (n.right != null)
+                queue.enqueue(n.right);
+        }
+    }
+
+
     private Iterator<T> levelOrderIterator() {
-        return null;
+        Queue<Node> queue = new Queue<>();
+        queue.enqueue(root);
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return !queue.isEmpty();
+            }
+
+            @Override
+            public T next() {
+                Node n = queue.dequeue();
+                if (n.left != null)
+                    queue.enqueue(n.left);
+                if (n.right != null)
+                    queue.enqueue(n.right);
+                return n.data;
+            }
+        };
     }
 
     private Iterator<T> postOrderIterator() {
-        return null;
+        Stack<Node> stack = new Stack<>();
+        Node temp = root;
+        stack.push(temp);
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return !stack.isEmpty();
+            }
+
+            @Override
+            public T next() {
+                Node root = stack.peek();
+                addLeftNodeToStack(root);
+                Node peek = stack.peek();
+                while (peek.right != null) {
+                    stack.add(peek.right);
+                    addLeftNodeToStack(peek.right);
+                    peek = peek.right;
+                }
+                Node current = stack.pop();
+                if (!stack.isEmpty()) {
+                    Node parent = stack.peek();
+                    if(parent.data.compareTo(current.data) > 0)
+                        parent.left = null;
+                    else
+                        parent.right = null;
+                }
+                return current.data;
+            }
+
+            private void addLeftNodeToStack(Node n) {
+                while (n.left != null) {
+                    stack.push(n.left);
+                    n = n.left;
+                }
+            }
+        };
     }
 
     private Iterator<T> inOrderIterator() {
-        return null;
+        Stack<Node> stack = new Stack<>();
+        Node temp = root;
+        stack.push(temp);
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return !stack.isEmpty();
+            }
+
+            @Override
+            public T next() {
+                Node root = stack.peek();
+                addToStack(root);
+                Node current = stack.pop();
+                if (!stack.isEmpty()) {
+                    Node parent = stack.peek();
+                    parent.left = null;
+                }
+                if (current.right != null)
+                    stack.add(current.right);
+                return current.data;
+            }
+
+            private void addToStack(Node n) {
+                while (n.left != null) {
+                    stack.push(n.left);
+                    n = n.left;
+                }
+            }
+        };
     }
 
     private Iterator<T> preOrderIterator() {
-        return null;
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        return new Iterator<T>() {
+
+            @Override
+            public boolean hasNext() {
+                return !stack.isEmpty();
+            }
+
+            @Override
+            public T next() {
+                Node node = stack.pop();
+                if (node.right != null)
+                    stack.push(node.right);
+                if (node.left != null)
+                    stack.push(node.left);
+                return node.data;
+            }
+        };
     }
 
 }
