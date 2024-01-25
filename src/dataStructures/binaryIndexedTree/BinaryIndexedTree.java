@@ -1,12 +1,12 @@
 package dataStructures.binaryIndexedTree;
 
 public class BinaryIndexedTree {
-    int[] indexArray;
+    int[] indexedArray;
     int[] arr;
 
     BinaryIndexedTree(int size) {
         if (size <= 0) throw new IllegalArgumentException("Size is less or equal to zero");
-        indexArray = new int[size + 1];
+        indexedArray = new int[size + 1];
         arr = new int[size];
         buildIndexedArray();
     }
@@ -14,16 +14,16 @@ public class BinaryIndexedTree {
     BinaryIndexedTree(int[] arr) {
         if (arr == null) throw new IllegalArgumentException("Array is null");
         this.arr = arr;
-        indexArray = new int[arr.length + 1];
+        indexedArray = new int[arr.length + 1];
         buildIndexedArray();
     }
 
     private void buildIndexedArray() {
-        System.arraycopy(arr, 0, indexArray, 1, arr.length);
-        for (int i = 1; i < indexArray.length; i++) {
+        System.arraycopy(arr, 0, indexedArray, 1, arr.length);
+        for (int i = 1; i < indexedArray.length; i++) {
             int lsb = i + lsb(i);
-            if (lsb < indexArray.length)
-                indexArray[lsb] = indexArray[lsb] + indexArray[i];
+            if (lsb < indexedArray.length)
+                indexedArray[lsb] = indexedArray[lsb] + indexedArray[i];
         }
     }
     private int lsb(int i) {
@@ -40,7 +40,7 @@ public class BinaryIndexedTree {
         i = i + 1;
         int sum = 0;
         while(i != 0) {
-            sum += indexArray[i];
+            sum += indexedArray[i];
             i -= lsb(i);
         }
         return sum;
@@ -50,8 +50,8 @@ public class BinaryIndexedTree {
         if(i >= arr.length) throw new IllegalArgumentException(i + " is equal or more than array length " + arr.length);
         arr[i] = val;
         i++;
-        while(i < indexArray.length) {
-            indexArray[i] += val;
+        while(i < indexedArray.length) {
+            indexedArray[i] += val;
             i += lsb(i);
         }
     }
