@@ -9,12 +9,12 @@ public class Main {
         graph = new Graph<>(false, false);
         initTestGraph();
         Iterator<Integer> dfsIterator = graph.dfsIterator();
-        System.out.println("DFS Iterator");
+        System.out.println("DFS Traversal");
         while(dfsIterator.hasNext())
             System.out.println(dfsIterator.next());
         System.out.println("---------------------");
         Iterator<Integer> bfsIterator = graph.bfsIterator();
-        System.out.println("BFS Iterator");
+        System.out.println("BFS Traversal");
         while(bfsIterator.hasNext())
             System.out.println(bfsIterator.next());
     }
