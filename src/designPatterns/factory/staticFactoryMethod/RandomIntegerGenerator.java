@@ -24,6 +24,6 @@ public class RandomIntegerGenerator {
     }
 
     public int nextInt() {
-        return new Random().nextInt(min, max);
+        return new Random().nextInt();
     }
 }

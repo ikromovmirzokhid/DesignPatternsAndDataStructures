@@ -127,16 +127,16 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public Iterator<T> iterator(TraversalOrder order) {
         switch (order) {
-            case PRE_ORDER -> {
+            case PRE_ORDER : {
                 return preOrderIterator();
             }
-            case IN_ORDER -> {
+            case IN_ORDER : {
                 return inOrderIterator();
             }
-            case POST_ORDER -> {
+            case POST_ORDER : {
                 return postOrderIterator();
             }
-            case LEVEL_ORDER -> {
+            case LEVEL_ORDER : {
                 return levelOrderIterator();
             }
         }
@@ -145,19 +145,19 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public void print(TraversalOrder order) {
         switch (order) {
-            case PRE_ORDER -> {
+            case PRE_ORDER : {
                 preOrderPrint(root);
                 break;
             }
-            case IN_ORDER -> {
+            case IN_ORDER : {
                 inOrderPrint(root);
                 break;
             }
-            case POST_ORDER -> {
+            case POST_ORDER : {
                 postOrderPrint(root);
                 break;
             }
-            case LEVEL_ORDER -> {
+            case LEVEL_ORDER : {
                 levelOrderPrint(root);
                 break;
             }
